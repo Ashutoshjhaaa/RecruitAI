@@ -1,8 +1,9 @@
-"use client";
+﻿"use client";
 
 import { Button } from "@/components/ui/button";
 import { Menu, Sparkles, Phone, Users, Calendar } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,17 +13,19 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                RecruitAI
-              </span>
-              <span className="text-xs text-muted-foreground font-medium">Voice Agent</span>
-            </div>
+            <Link href="/" className="flex items-center gap-3">
+              <div className="h-10 w-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                <Sparkles className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                  RecruitAI
+                </span>
+                <span className="text-xs text-muted-foreground font-medium">Voice Agent</span>
+              </div>
+            </Link>
           </div>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <div className="flex items-center gap-6 text-sm font-medium">
@@ -32,17 +35,21 @@ export function Navbar() {
               <a href="#demo" className="text-foreground/80 hover:text-foreground transition-colors">Demo</a>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="text-sm font-medium">
-                Sign In
-              </Button>
-              <Button size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg shadow-primary/20">
-                Get Started
-              </Button>
+              <Link href="/sign-in">
+                <Button variant="ghost" size="sm" className="text-sm font-medium">
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/sign-up">
+                <Button size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg shadow-primary/20">
+                  Get Started
+                </Button>
+              </Link>
             </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             className="md:hidden p-2 rounded-md hover:bg-muted/50 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -59,10 +66,14 @@ export function Navbar() {
               <a href="#pricing" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Pricing</a>
               <a href="#demo" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Demo</a>
               <div className="flex flex-col gap-3 pt-4">
-                <Button variant="ghost" className="w-full">Sign In</Button>
-                <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
-                  Get Started
-                </Button>
+                <Link href="/sign-in" className="w-full">
+                  <Button variant="ghost" className="w-full">Sign In</Button>
+                </Link>
+                <Link href="/sign-up" className="w-full">
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
