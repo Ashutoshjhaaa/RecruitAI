@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, Sparkles, Phone, Users, Calendar } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { useAuth, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSignedIn } = useAuth();
 
   return (
     <nav className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
@@ -35,16 +37,25 @@ export function Navbar() {
               <a href="#demo" className="text-foreground/80 hover:text-foreground transition-colors">Demo</a>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/sign-in">
-                <Button variant="ghost" size="sm" className="text-sm font-medium">
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg shadow-primary/20">
-                  Get Started
-                </Button>
-              </Link>
+              <SignedIn>
+                <Link href="/dashboard">
+                  <Button size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg shadow-primary/20">
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              </SignedIn>
+              <SignedOut>
+                <Link href="/sign-in">
+                  <Button variant="ghost" size="sm" className="text-sm font-medium">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground shadow-lg shadow-primary/20">
+                    Get Started
+                  </Button>
+                </Link>
+              </SignedOut>
             </div>
           </div>
 
@@ -66,14 +77,23 @@ export function Navbar() {
               <a href="#pricing" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Pricing</a>
               <a href="#demo" className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors py-2">Demo</a>
               <div className="flex flex-col gap-3 pt-4">
-                <Link href="/sign-in" className="w-full">
-                  <Button variant="ghost" className="w-full">Sign In</Button>
-                </Link>
-                <Link href="/sign-up" className="w-full">
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
-                    Get Started
-                  </Button>
-                </Link>
+                <SignedIn>
+                  <Link href="/dashboard" className="w-full">
+                    <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
+                      Go to Dashboard
+                    </Button>
+                  </Link>
+                </SignedIn>
+                <SignedOut>
+                  <Link href="/sign-in" className="w-full">
+                    <Button variant="ghost" className="w-full">Sign In</Button>
+                  </Link>
+                  <Link href="/sign-up" className="w-full">
+                    <Button className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary">
+                      Get Started
+                    </Button>
+                  </Link>
+                </SignedOut>
               </div>
             </div>
           </div>
