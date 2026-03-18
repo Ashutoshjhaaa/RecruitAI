@@ -1,16 +1,22 @@
 import { db } from "./index";
 import { users, companies } from "./schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, or } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
 
 export async function createUserFromClerk(clerkUserId: string, email: string, name: string) {
   try {
-    // Check if user already exists
+    // Check if user already exists by ID or Email
     const existingUser = await db.query.users.findFirst({
-      where: eq(users.id, clerkUserId),
+      where: or(eq(users.id, clerkUserId), eq(users.email, email)),
     });
 
     if (existingUser) {
+      // If user exists by email but has a different ID, update the ID to sync with Clerk
+      if (existingUser.id !== clerkUserId && existingUser.email === email) {
+        console.log(`Syncing Clerk ID for user ${email}: ${existingUser.id} -> ${clerkUserId}`);
+        await db.update(users).set({ id: clerkUserId }).where(eq(users.email, email));
+        return { ...existingUser, id: clerkUserId };
+      }
       return existingUser;
     }
 

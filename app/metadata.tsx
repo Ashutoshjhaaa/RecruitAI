@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
   title: "RecruitAI - AI Voice Agent for Automated Recruitment",
   description: "Transform your hiring process with AI-powered voice interviews. Import candidate lists and let our intelligent agent conduct personalized screening interviews, evaluate skills, and schedule qualified candidates automatically.",
   keywords: [
